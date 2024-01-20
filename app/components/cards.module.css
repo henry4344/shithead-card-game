@@ -1,0 +1,32 @@
+.card {
+  width: 200px;
+  height: 280px;
+  background-color: rgb(252, 252, 252);
+  border-radius: 5px;
+  border: 1px solid rgb(151, 151, 151);
+  padding: 1rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  /* position: absolute; */
+}
+
+.number {
+  padding-right: 5px;
+}
+.bottomCard {
+  transform: rotate(180deg);
+}
+
+.numberSuit {
+  display: flex;
+  flex-direction: row;
+  font-size: x-large;
+}
+
+.middleSuit {
+  font-size: 120px;
+  text-align: center;
+}
