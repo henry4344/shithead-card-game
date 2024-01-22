@@ -17,3 +17,8 @@ export interface Club {
 export interface Spade {
   spade: string;
 }
+
+export interface Hand {
+  value: number;
+  suit: string;
+}

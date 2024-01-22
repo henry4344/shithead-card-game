@@ -1,20 +1,24 @@
 .card {
-  width: 200px;
-  height: 280px;
+  width: 150px;
+  height: 230px;
   background-color: rgb(252, 252, 252);
   border-radius: 5px;
   border: 1px solid rgb(151, 151, 151);
-  padding: 1rem;
+  padding: 5px;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
+  cursor: pointer;
   /* position: absolute; */
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: translate(0, -15px);
 }
 
 .number {
-  padding-right: 5px;
+  padding: 0 5px;
 }
 .bottomCard {
   transform: rotate(180deg);
@@ -27,6 +31,14 @@
 }
 
 .middleSuit {
-  font-size: 120px;
+  font-size: 100px;
   text-align: center;
+  /* max-height: 100px; */
+  text-align: center;
+}
+
+.numberSuitHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

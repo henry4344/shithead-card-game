@@ -76,3 +76,106 @@ a:hover {
 .black {
   color: black;
 }
+
+.background {
+  height: 100vh;
+  /* width: 100vw; */
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.background-img {
+  height: 100vh;
+  min-width: 1000px;
+  /* width: 5521px; */
+  transform-origin: center center;
+  transition: transform 0.5s ease;
+}
+
+.above-board {
+  height: 45%;
+  /* background-color: red; */
+  /* opacity: 0.5; */
+}
+.board {
+  height: 23%;
+  /* background-color: blue; */
+  /* opacity: 0.5; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.below-board {
+  height: 35%;
+  /* background-color: pink; */
+  /* opacity: 0.5; */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.table {
+  /* background-color: white; */
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-cards *,
+.opponent-cards * {
+  margin: 0 0.5rem;
+}
+
+.game-cards {
+  display: flex;
+  flex-direction: row;
+  /* background-color: white; */
+}
+.pickup-cards-holder {
+  min-height: 60px;
+}
+.pickup-cards {
+  background-color: rebeccapurple;
+  /* height: auto; */
+  /* position: absolute; */
+  /* top: 0;
+  left: 0; */
+  /* left: 0; */
+  position: relative;
+}
+
+/* .game-cards * {
+  margin: 0 3rem;
+} */
+
+.game-card-back {
+  position: absolute;
+  left: -150px;
+}
+
+.play-cards {
+  position: absolute;
+}
+
+.player-hand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.hand-cards {
+  display: flex;
+  flex-direction: row;
+}

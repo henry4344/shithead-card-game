@@ -19,7 +19,15 @@ const NUMBER_VISUAL = {
   14: "A",
 };
 
-export default function Card({ value, suit }: { value: number; suit: string }) {
+export default function Card({
+  value,
+  suit,
+  index,
+}: {
+  value: number;
+  suit: string;
+  index: number;
+}) {
   function NumberSuit({
     value,
     suit,
@@ -31,9 +39,15 @@ export default function Card({ value, suit }: { value: number; suit: string }) {
   }) {
     const style = clsx(styles.number);
     return (
-      <div className={clsx(styles.numberSuit, bottom && styles.bottomCard)}>
-        <span className={styles.number}>{value}</span>
-        <span>{getSuitSymbol(suit)}</span>
+      <div className={styles.numberSuitHolder}>
+        <div className={clsx(styles.numberSuit, bottom && styles.bottomCard)}>
+          <span className={styles.number}>{value}</span>
+          <span>{getSuitSymbol(suit)}</span>
+        </div>
+        <div className={clsx(styles.numberSuit, bottom && styles.bottomCard)}>
+          <span className={styles.number}>{value}</span>
+          <span>{getSuitSymbol(suit)}</span>
+        </div>
       </div>
     );
   }
