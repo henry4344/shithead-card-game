@@ -1,20 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import Card from "../components/card";
+import { useEffect, useState } from "react";
+import Card from "../ui/cards/front-card/card";
 import Background from "../ui/background";
 import GameCardBack from "../ui/cards/game-card-back";
 import OpponentCardBack from "../ui/cards/oppenent-card-back";
 import PlayerCardBack from "../ui/cards/player-card-back";
 import styles from "./page.module.css";
-import { Hand } from "../lib/definitions";
+import { TCard } from "../lib/definitions";
+import createDeck from "../gameFunctions/createDeck";
+import createHands from "../gameFunctions/setHands";
+import SmallCard from "../ui/cards/front-card/small-card";
 
 export default function GamePage() {
-  const [hand, setHand] = useState<Hand[]>([
-    { value: 2, suit: "heart" },
-    { value: 10, suit: "diamond" },
-    { value: 5, suit: "club" },
-  ]);
+  const [hand, setHand] = useState<TCard[]>();
+  const [hiddenCards, setHiddenCards] = useState<TCard[]>();
+  const [shownCards, setShownCards] = useState<TCard[]>();
+  const [oppenentHand, setOpponentHand] = useState<TCard[]>();
+  const [opponentHiddenCards, setOpponendHiddenCards] = useState<TCard[]>();
+  const [opponentShownCards, setOpponentShownCards] = useState<TCard[]>();
+  const [deck, setDeck] = useState<TCard[]>();
+
+  useEffect(() => {
+    const deck = createDeck();
+    const {
+      hand,
+      hiddenCards,
+      shownCards,
+      oppenentHand,
+      opponentHiddenCards,
+      opponentShownCards,
+    } = createHands(deck);
+
+    setHand(hand);
+    setHiddenCards(hiddenCards);
+    setShownCards(shownCards);
+    setOpponentHand(oppenentHand);
+    setOpponendHiddenCards(opponentHiddenCards);
+    setOpponentShownCards(opponentShownCards);
+    setDeck(deck.slice(18));
+  }, []);
   return (
     <>
       <Background />
@@ -24,9 +49,23 @@ export default function GamePage() {
         </div>
         <div className="board">
           <div className="table opponent-cards">
-            <OpponentCardBack />
-            <OpponentCardBack />
-            <OpponentCardBack />
+            <div className="face-down-cards">
+              <OpponentCardBack />
+              <OpponentCardBack />
+              <OpponentCardBack />
+            </div>
+            <div className="face-up-cards">
+              {opponentShownCards
+                ? opponentShownCards.map((card, index) => (
+                    <SmallCard
+                      key={index}
+                      value={card.value}
+                      suit={card.suit}
+                      cardStyle="opponent-table-card"
+                    />
+                  ))
+                : null}
+            </div>
           </div>
           <div className="table game-cards">
             <div className="pickup-cards-holder">
@@ -42,22 +81,38 @@ export default function GamePage() {
             <div className="play-cards"></div>
           </div>
           <div className="table player-cards">
-            <PlayerCardBack />
-            <PlayerCardBack />
-            <PlayerCardBack />
+            <div className="face-down-cards">
+              <PlayerCardBack />
+              <PlayerCardBack />
+              <PlayerCardBack />
+            </div>
+            <div className="face-up-cards">
+              {shownCards
+                ? shownCards.map((card, index) => (
+                    <SmallCard
+                      key={index}
+                      value={card.value}
+                      suit={card.suit}
+                      cardStyle="player-table-card"
+                    />
+                  ))
+                : null}
+            </div>
           </div>
         </div>
         <div className="below-board">
           <div className="player-hand">
             <div className="hand-cards">
-              {hand.map((card, index) => (
-                <Card
-                  key={index}
-                  index={index}
-                  value={card.value}
-                  suit={card.suit}
-                />
-              ))}
+              {hand
+                ? hand.map((card, index) => (
+                    <Card
+                      key={index}
+                      value={card.value}
+                      suit={card.suit}
+                      cardStyle="hand"
+                    />
+                  ))
+                : null}
             </div>
           </div>
         </div>

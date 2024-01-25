@@ -1,9 +1,12 @@
 import clsx from "clsx";
-import { getSuitColour, getSuitSymbol } from "../gameFunctions/getSuitSymbol";
-import { Suits, Heart, Diamond, Spade, Club } from "../lib/definitions";
+import {
+  getSuitColour,
+  getSuitSymbol,
+} from "../../../gameFunctions/getSuitSymbol";
+import { TCardValues } from "../../../lib/definitions";
 import styles from "./cards.module.css";
 
-const NUMBER_VISUAL = {
+const NUMBER_VISUAL: TCardValues = {
   2: 2,
   3: 3,
   4: 4,
@@ -22,11 +25,11 @@ const NUMBER_VISUAL = {
 export default function Card({
   value,
   suit,
-  index,
+  cardStyle,
 }: {
   value: number;
   suit: string;
-  index: number;
+  cardStyle: string;
 }) {
   function NumberSuit({
     value,
@@ -37,15 +40,14 @@ export default function Card({
     suit: string;
     bottom?: boolean;
   }) {
-    const style = clsx(styles.number);
     return (
       <div className={styles.numberSuitHolder}>
         <div className={clsx(styles.numberSuit, bottom && styles.bottomCard)}>
-          <span className={styles.number}>{value}</span>
+          <span className={styles.number}>{NUMBER_VISUAL[value]}</span>
           <span>{getSuitSymbol(suit)}</span>
         </div>
         <div className={clsx(styles.numberSuit, bottom && styles.bottomCard)}>
-          <span className={styles.number}>{value}</span>
+          <span className={styles.number}>{NUMBER_VISUAL[value]}</span>
           <span>{getSuitSymbol(suit)}</span>
         </div>
       </div>
@@ -56,7 +58,7 @@ export default function Card({
     return <div className={styles.middleSuit}>{getSuitSymbol(suit)}</div>;
   }
   return (
-    <div className={clsx(styles.card, getSuitColour(suit))}>
+    <div className={clsx(styles.card, getSuitColour(suit), cardStyle)}>
       <NumberSuit value={value} suit={suit} />
       <Suit suit={suit} />
       <NumberSuit value={value} suit={suit} bottom={true} />

@@ -1,20 +1,19 @@
 .card {
-  width: 150px;
-  height: 230px;
   background-color: rgb(252, 252, 252);
   border-radius: 5px;
   border: 1px solid rgb(151, 151, 151);
   padding: 5px;
-  font-weight: 700;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   cursor: pointer;
   /* position: absolute; */
   transition: transform 0.3s;
+  box-sizing: border-box;
+  border: 2px solid #ffffff00;
 }
 .card:hover {
-  transform: translate(0, -15px);
+  border: 2px #d1df31 solid;
 }
 
 .number {
@@ -31,14 +30,18 @@
 }
 
 .middleSuit {
-  font-size: 100px;
+  font-size: 110px;
   text-align: center;
   /* max-height: 100px; */
   text-align: center;
+  height: 130px;
+  position: relative;
+  bottom: 20px;
 }
 
 .numberSuitHolder {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 3px;
 }

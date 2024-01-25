@@ -5,7 +5,7 @@ export default function GameCardBack() {
   const randomTilt = () => Math.random() * 10 - 5;
   return (
     <Image
-      className="game-card-back"
+      className="card game-card-back"
       style={{ transform: `rotate(${randomTilt()}deg)` }}
       src="/game-card-back.svg"
       alt="opponent-card-back"

@@ -18,7 +18,11 @@ export interface Spade {
   spade: string;
 }
 
-export interface Hand {
+export interface TCard {
   value: number;
   suit: string;
+}
+
+export interface TCardValues {
+  [key: number]: number | string;
 }

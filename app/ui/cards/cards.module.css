@@ -1,0 +1,7 @@
+.player-card-front {
+  /* height: 70px;
+  width: 55px; */
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid blue; /* You can change the color */
+}

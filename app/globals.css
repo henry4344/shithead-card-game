@@ -79,7 +79,7 @@ a:hover {
 
 .background {
   height: 100vh;
-  /* width: 100vw; */
+  width: 100vw;
   overflow: hidden;
   position: absolute;
   z-index: -1;
@@ -93,7 +93,7 @@ a:hover {
 
 .background-img {
   height: 100vh;
-  min-width: 1000px;
+  min-width: 1900px;
   /* width: 5521px; */
   transform-origin: center center;
   transition: transform 0.5s ease;
@@ -163,19 +163,98 @@ a:hover {
   left: -150px;
 }
 
+.card {
+  cursor: pointer;
+}
+
 .play-cards {
   position: absolute;
 }
 
 .player-hand {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* position: relative; */
+  display: inline-block;
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
   margin-bottom: 0.5rem;
 }
 
 .hand-cards {
   display: flex;
   flex-direction: row;
+  box-sizing: border-box;
+}
+
+.hand {
+  width: 160px;
+  height: 230px;
+  font-weight: 700;
+  margin: 2px;
+  /* box-sizing: border-box; */
+}
+
+.hand:hover {
+  transform: translate(0, -15px);
+}
+
+.player-table-card {
+  height: 58px;
+  width: 50px;
+  z-index: 10;
+  /* opacity: 0.5; */
+  padding-bottom: 8px;
+
+  transform: perspective(120px) rotateX(15deg);
+}
+
+.opponent-table-card {
+  height: 45px;
+  width: 40px;
+  z-index: 10;
+  /* opacity: 0.5; */
+  /* margin-bottom: 15px; */
+
+  transform: perspective(100px) rotateX(15deg);
+
+  font-size: smaller;
+}
+
+.face-down-cards {
+  position: relative;
+}
+
+.face-up-cards {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  /* position: absolute; */
+}
+.face-up-cards > * {
+  margin: 0.7rem;
+  margin-bottom: 22px;
+}
+
+.small-number {
+  font-weight: bold;
+  font-size: 22px;
+  position: relative;
+  top: 3px;
+  text-align: center;
+}
+.small-suit {
+  max-height: 30px;
+  font-size: 30px;
+  position: relative;
+  bottom: 14px;
+  text-align: center;
+}
+
+.opponent-table-card-number {
+  font-size: 15px;
+  top: 6px;
+}
+.opponent-table-card-suit {
+  font-size: 21px;
+  bottom: 5px;
 }
