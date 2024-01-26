@@ -1,12 +1,10 @@
-import clsx from "clsx";
 import Image from "next/image";
 
-export default function GameCardBack() {
-  const randomTilt = () => Math.random() * 10 - 5;
+export default function GameCardBack({ tilt }: { tilt: number }) {
   return (
     <Image
       className="card game-card-back"
-      style={{ transform: `rotate(${randomTilt()}deg)` }}
+      style={{ transform: `rotate(${tilt}deg)` }}
       src="/game-card-back.svg"
       alt="opponent-card-back"
       height={65}

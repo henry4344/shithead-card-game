@@ -26,10 +26,12 @@ export default function SmallCard({
   value,
   suit,
   cardStyle,
+  playerCard,
 }: {
   value: number;
   suit: string;
   cardStyle: string;
+  playerCard?: boolean;
 }) {
   function Number({ value, cardStyle }: { value: number; cardStyle: string }) {
     return (
@@ -47,7 +49,14 @@ export default function SmallCard({
     );
   }
   return (
-    <div className={clsx(styles.card, getSuitColour(suit), cardStyle)}>
+    <div
+      className={clsx(
+        styles.card,
+        getSuitColour(suit),
+        cardStyle,
+        playerCard && "player-card"
+      )}
+    >
       <Number value={value} cardStyle={cardStyle} />
       <Suit suit={suit} cardStyle={cardStyle} />
     </div>

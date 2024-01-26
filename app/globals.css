@@ -33,6 +33,19 @@ body {
   overflow-x: hidden;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* padding: 2rem 6rem; */
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  /* align-items: center; */
+}
+
 .button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -80,6 +93,7 @@ a:hover {
 .background {
   height: 100vh;
   width: 100vw;
+
   overflow: hidden;
   position: absolute;
   z-index: -1;
@@ -94,6 +108,7 @@ a:hover {
 .background-img {
   height: 100vh;
   min-width: 1900px;
+  /* width: 100vw; */
   /* width: 5521px; */
   transform-origin: center center;
   transition: transform 0.5s ease;
@@ -131,8 +146,7 @@ a:hover {
   justify-content: center;
 }
 
-.player-cards *,
-.opponent-cards * {
+.face-down-cards * {
   margin: 0 0.5rem;
 }
 
@@ -198,6 +212,11 @@ a:hover {
   transform: translate(0, -15px);
 }
 
+.hand.active {
+  transform: translate(0, -15px);
+  border: 2px #d1df31 solid;
+}
+
 .player-table-card {
   height: 58px;
   width: 50px;
@@ -258,3 +277,6 @@ a:hover {
   font-size: 21px;
   bottom: 5px;
 }
+/* .player-card:hover {
+  border: 2px #d1df31 solid;
+} */

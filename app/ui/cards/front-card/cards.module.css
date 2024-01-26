@@ -12,9 +12,6 @@
   box-sizing: border-box;
   border: 2px solid #ffffff00;
 }
-.card:hover {
-  border: 2px #d1df31 solid;
-}
 
 .number {
   padding: 0 5px;
