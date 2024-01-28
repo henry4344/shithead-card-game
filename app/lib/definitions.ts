@@ -26,3 +26,10 @@ export interface TCard {
 export interface TCardValues {
   [key: number]: number | string;
 }
+
+export interface TPlayer {
+  name: string;
+  hand: TCard[];
+  tableUp: TCard[];
+  tableDown: TCard[];
+}

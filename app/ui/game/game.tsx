@@ -38,6 +38,7 @@ export default function Game({
   const [opponentShownCards, setOpponentShownCards] = useState<TCard[]>(
     hands.opponentShownCards
   );
+  const [gameCards, setGameCards] = useState<TCard[]>(deck.slice(0, 10));
 
   const [cardsActive, setCardsActive] = useState<number[]>([]);
 
@@ -90,7 +91,18 @@ export default function Game({
                 <GameCardBack tilt={cardTilts[6]} />
               </div>
             </div>
-            <div className="play-cards"></div>
+            <div className="play-cards">
+              {gameCards &&
+                gameCards.map((card, index) => (
+                  <SmallCard
+                    key={index}
+                    value={card.value}
+                    suit={card.suit}
+                    cardStyle="game-card"
+                    // playerCard={true}
+                  />
+                ))}
+            </div>
           </div>
           <div className="table player-cards">
             <div className="face-down-cards">
