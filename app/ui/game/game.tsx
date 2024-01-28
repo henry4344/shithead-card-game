@@ -2,18 +2,19 @@
 
 import { TCard } from "@/app/lib/definitions";
 import Background from "../background";
-import OpponentCardBack from "../cards/oppenent-card-back";
 import SmallCard from "../cards/front-card/small-card";
 import GameCardBack from "../cards/game-card-back";
 import PlayerCardBack from "../cards/player-card-back";
 import Card from "../cards/front-card/card";
 import { useState } from "react";
+import OpponentHand from "../cards/opponent-hand";
+import OpponentCardBack from "../cards/oppenent-card-back";
 
 interface Hands {
   hand: TCard[];
   hiddenCards: TCard[];
   shownCards: TCard[];
-  oppenentHand: TCard[];
+  opponentHand: TCard[];
   opponentHiddenCards: TCard[];
   opponentShownCards: TCard[];
 }
@@ -30,7 +31,7 @@ export default function Game({
   const [hand, setHand] = useState<TCard[]>(hands.hand);
   const [hiddenCards, setHiddenCards] = useState<TCard[]>(hands.hiddenCards);
   const [shownCards, setShownCards] = useState<TCard[]>(hands.shownCards);
-  const [oppenentHand, setOpponentHand] = useState<TCard[]>(hands.oppenentHand);
+  const [opponentHand, setOpponentHand] = useState<TCard[]>(hands.opponentHand);
   const [opponentHiddenCards, setOpponendHiddenCards] = useState<TCard[]>(
     hands.opponentHiddenCards
   );
@@ -53,7 +54,10 @@ export default function Game({
       <Background />
       <main className="main">
         <div className="above-board">
-          <div className="opponent-hand"></div>
+          <div className="opponent-hand">
+            {opponentHand &&
+              opponentHand.map((card, index) => <OpponentHand key={index} />)}
+          </div>
         </div>
         <div className="board">
           <div className="table opponent-cards">
