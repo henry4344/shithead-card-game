@@ -11,6 +11,7 @@
   transition: transform 0.3s;
   box-sizing: border-box;
   border: 2px solid #ffffff00;
+  user-select: none;
 }
 
 .number {

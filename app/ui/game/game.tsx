@@ -1,148 +1,120 @@
 "use client";
 
-import { TCard } from "@/app/lib/definitions";
+import { TCard, TPlayer } from "@/app/lib/definitions";
 import Background from "../background";
 import SmallCard from "../cards/front-card/small-card";
 import GameCardBack from "../cards/game-card-back";
 import PlayerCardBack from "../cards/player-card-back";
 import Card from "../cards/front-card/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OpponentHand from "../cards/opponent-hand";
 import OpponentCardBack from "../cards/oppenent-card-back";
+import Hand from "./hand";
+import TableOpponent from "./table-opponent";
+import TablePlayer from "./table-player";
+import TableGame from "./table-game";
+import Shithead from "@/app/game-utils/shithead";
+import createCardTilts from "@/app/game-utils/create-card-tilts";
+var cloneDeep = require("lodash.clonedeep");
 
 interface Hands {
   hand: TCard[];
-  hiddenCards: TCard[];
-  shownCards: TCard[];
+  playerDown: TCard[];
+  playerUp: TCard[];
   opponentHand: TCard[];
-  opponentHiddenCards: TCard[];
-  opponentShownCards: TCard[];
+  opponentDown: TCard[];
+  opponentUp: TCard[];
 }
 
-export default function Game({
-  deck,
-  hands,
-  cardTilts,
-}: {
-  deck: TCard[];
-  hands: Hands;
+interface GameProps {
+  game: Shithead;
   cardTilts: number[];
-}) {
-  const [hand, setHand] = useState<TCard[]>(hands.hand);
-  const [hiddenCards, setHiddenCards] = useState<TCard[]>(hands.hiddenCards);
-  const [shownCards, setShownCards] = useState<TCard[]>(hands.shownCards);
-  const [opponentHand, setOpponentHand] = useState<TCard[]>(hands.opponentHand);
-  const [opponentHiddenCards, setOpponendHiddenCards] = useState<TCard[]>(
-    hands.opponentHiddenCards
-  );
-  const [opponentShownCards, setOpponentShownCards] = useState<TCard[]>(
-    hands.opponentShownCards
-  );
-  const [gameCards, setGameCards] = useState<TCard[]>(deck.slice(0, 10));
+}
 
-  const [cardsActive, setCardsActive] = useState<number[]>([]);
+export default function Game() {
+  const [initialized, setInitalized] = useState(false);
+  const [game, setGame] = useState<Shithead>(new Shithead());
+  const [cardTilts, setCardTilts] = useState<number[]>([]);
+  const [updateBoard, setUpdateBoard] = useState(false);
 
-  const setCardActive = (index: number) => {
-    if (cardsActive.includes(index))
-      setCardsActive((prevCards) => prevCards.filter((card) => index !== card));
+  useEffect(() => {
+    const game = new Shithead();
+    game.initializeDeck();
+    game.addPlayer("Player1");
+    game.addPlayer("AI");
+    game.dealCards();
 
-    if (!cardsActive.includes(index))
-      setCardsActive((prevCards) => [...prevCards, index]);
+    console.log(game.players);
+
+    setGame(game);
+
+    const cardTilts = createCardTilts();
+    setCardTilts(cardTilts);
+
+    setInitalized(true);
+  }, []);
+
+  const pickup = () => {
+    const updatedHand = game.pickupCard();
+    // Update the state with the new hand
+    // Create a deep clone of the game state
+    const newGame = cloneDeep(game);
+
+    // Update the state with the new instance
+    setGame(newGame);
   };
 
   return (
     <>
       <Background />
-      <main className="main">
-        <div className="above-board">
-          <div className="opponent-hand">
-            {opponentHand &&
-              opponentHand.map((card, index) => <OpponentHand key={index} />)}
-          </div>
-        </div>
-        <div className="board">
-          <div className="table opponent-cards">
-            <div className="face-down-cards">
-              {opponentHiddenCards &&
-                opponentHiddenCards.map((card, index) => (
-                  <OpponentCardBack key={index} tilt={cardTilts[index]} />
-                ))}
-            </div>
-            <div className="face-up-cards">
-              {opponentShownCards &&
-                opponentShownCards.map((card, index) => (
-                  <SmallCard
-                    key={index}
-                    value={card.value}
-                    suit={card.suit}
-                    cardStyle="opponent-table-card"
-                  />
+      {initialized ? (
+        <main className="main">
+          <div className="above-board">
+            <div className="opponent-hand">
+              {game.players[1].hand &&
+                game.players[1].hand.map((card, index) => (
+                  <OpponentHand key={index} />
                 ))}
             </div>
           </div>
-          <div className="table game-cards">
-            <div className="pickup-cards-holder">
-              <div className="pickup-cards">
-                <GameCardBack tilt={cardTilts[1]} />
-                <GameCardBack tilt={cardTilts[2]} />
-                <GameCardBack tilt={cardTilts[3]} />
-                <GameCardBack tilt={cardTilts[4]} />
-                <GameCardBack tilt={cardTilts[5]} />
-                <GameCardBack tilt={cardTilts[6]} />
-              </div>
-            </div>
-            <div className="play-cards">
-              {gameCards &&
-                gameCards.map((card, index) => (
-                  <SmallCard
-                    key={index}
-                    value={card.value}
-                    suit={card.suit}
-                    cardStyle="game-card"
-                    // playerCard={true}
-                  />
-                ))}
-            </div>
+          <div className="board">
+            <TableOpponent
+              opponentUp={game.players[1].tableUp}
+              opponentDown={game.players[1].tableDown}
+              cardTilts={cardTilts}
+            />
+
+            <TableGame
+              deck={game.deck}
+              gamePile={game.gamePile}
+              cardTilts={cardTilts}
+              pickup={pickup}
+            />
+
+            <TablePlayer
+              playerUp={game.players[0].tableUp}
+              playerDown={game.players[0].tableDown}
+              cardTilts={cardTilts}
+            />
           </div>
-          <div className="table player-cards">
-            <div className="face-down-cards">
-              {hiddenCards &&
-                hiddenCards.map((card, index) => (
-                  <PlayerCardBack key={index} tilt={cardTilts[index]} />
-                ))}
-            </div>
-            <div className="face-up-cards">
-              {shownCards &&
-                shownCards.map((card, index) => (
-                  <SmallCard
-                    key={index}
-                    value={card.value}
-                    suit={card.suit}
-                    cardStyle="player-table-card"
-                    playerCard={true}
-                  />
-                ))}
-            </div>
+          <Hand playerHand={game.players[0].hand} />
+        </main>
+      ) : (
+        <>
+          <div className="above-board" />
+          <div className="board">
+            <div className="table opponent-cards" />
+            <TableGame
+              deck={game.deck}
+              gamePile={game.gamePile}
+              cardTilts={cardTilts}
+              pickup={game.pickupCard}
+            />
+            <div className="table player-cards" />
           </div>
-        </div>
-        <div className="below-board">
-          <div className="player-hand">
-            <div className="hand-cards">
-              {hand &&
-                hand.map((card, index) => (
-                  <Card
-                    key={index}
-                    index={index}
-                    value={card.value}
-                    suit={card.suit}
-                    cardStyle="hand"
-                    setCardActive={setCardActive}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-      </main>
+          <div className="below-board" />
+        </>
+      )}
     </>
   );
 }
