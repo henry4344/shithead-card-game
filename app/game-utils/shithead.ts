@@ -86,10 +86,6 @@ export default class Shithead {
   }
 
   pickupCard() {
-    console.log("clicked");
-    console.log(this.players);
-    console.log(this.currentPlayerIndex);
-
     if (this.deck.length == 0) return;
 
     // Remove the top card from the deck
@@ -105,5 +101,30 @@ export default class Shithead {
     this.players = updatedPlayers;
 
     return this.players[this.currentPlayerIndex].hand;
+  }
+
+  playCard(cardsActive: TCard[]) {
+    console.log(cardsActive);
+    const playCards = [];
+    for (const card in cardsActive) {
+      console.log(cardsActive[card]);
+      playCards.push(cardsActive[card]);
+    }
+    console.log(playCards);
+
+    const updatedPlayers = [...this.players];
+    const updatedHand = updatedPlayers[this.currentPlayerIndex].hand.filter(
+      (card) => !cardsActive.includes(card)
+    );
+    updatedPlayers[this.currentPlayerIndex].hand = updatedHand;
+    console.log(updatedPlayers[this.currentPlayerIndex].hand);
+
+    this.players = updatedPlayers;
+    this.gamePile.push(...playCards);
+
+    for (const card in cardsActive) {
+      this.pickupCard();
+    }
+    console.log(this.gamePile);
   }
 }

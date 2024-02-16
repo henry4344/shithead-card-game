@@ -15,7 +15,6 @@ export default function TableGame({
 }) {
   // const [deckPile, setDeckPile] = useState(Math.ceil(deck.length / 10 + 0.89));
   const deckPile = Math.floor(Math.min(deck.length, 34) / 5 + 0.89);
-  console.log(deckPile);
 
   return (
     <div className="table game-cards">

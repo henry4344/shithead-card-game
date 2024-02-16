@@ -35,7 +35,21 @@ export default function Game() {
   const [initialized, setInitalized] = useState(false);
   const [game, setGame] = useState<Shithead>(new Shithead());
   const [cardTilts, setCardTilts] = useState<number[]>([]);
-  const [updateBoard, setUpdateBoard] = useState(false);
+
+  const [cardsActive, setCardsActive] = useState<TCard[]>([]);
+  const [cardValueSelected, setCardValueSelected] = useState<number>();
+
+  const setCardActive = (index: number, card: TCard) => {
+    if (cardsActive.includes(card)) return playCard();
+
+    if (cardValueSelected && card.value == cardValueSelected) {
+      setCardsActive((prevState) => [...prevState, card]);
+    }
+    if (card.value != cardValueSelected || !cardValueSelected) {
+      setCardsActive([card]);
+      setCardValueSelected(card.value);
+    }
+  };
 
   useEffect(() => {
     const game = new Shithead();
@@ -54,12 +68,23 @@ export default function Game() {
     setInitalized(true);
   }, []);
 
+  useEffect(() => {});
+
   const pickup = () => {
     const updatedHand = game.pickupCard();
     // Update the state with the new hand
+
     // Create a deep clone of the game state
     const newGame = cloneDeep(game);
+    // Update the state with the new instance
+    setGame(newGame);
+  };
 
+  const playCard = () => {
+    game.playCard(cardsActive);
+
+    // Create a deep clone of the game state
+    const newGame = cloneDeep(game);
     // Update the state with the new instance
     setGame(newGame);
   };
@@ -97,7 +122,12 @@ export default function Game() {
               cardTilts={cardTilts}
             />
           </div>
-          <Hand playerHand={game.players[0].hand} />
+          <Hand
+            playerHand={game.players[0].hand}
+            cardsActive={cardsActive}
+            setCardActive={setCardActive}
+            // playCard={playCard}
+          />
         </main>
       ) : (
         <>

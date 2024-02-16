@@ -2,17 +2,19 @@ import { TCard } from "@/app/lib/definitions";
 import Card from "../cards/front-card/card";
 import { useState } from "react";
 
-export default function Hand({ playerHand }: { playerHand: TCard[] }) {
-  const [cardsActive, setCardsActive] = useState<number[]>([]);
+interface HandProps {
+  playerHand: TCard[];
+  cardsActive: TCard[];
+  setCardActive(index: number, card: TCard): void;
+  // playCard(activeCards: number[]): void;
+}
 
-  const setCardActive = (index: number) => {
-    if (cardsActive.includes(index))
-      setCardsActive((prevCards) => prevCards.filter((card) => index !== card));
-
-    if (!cardsActive.includes(index))
-      setCardsActive((prevCards) => [...prevCards, index]);
-  };
-
+export default function Hand({
+  playerHand,
+  cardsActive,
+  setCardActive,
+}: // playCard,
+HandProps) {
   return (
     <div className="below-board">
       <div className="player-hand">
@@ -22,10 +24,13 @@ export default function Hand({ playerHand }: { playerHand: TCard[] }) {
               <Card
                 key={index}
                 index={index}
-                value={card.value}
-                suit={card.suit}
+                card={card}
+                // value={card.value}
+                // suit={card.suit}
                 cardStyle="hand"
+                cardsActive={cardsActive}
                 setCardActive={setCardActive}
+                // playCard={playCard}
               />
             ))}
         </div>

@@ -3,7 +3,7 @@ import {
   getSuitColour,
   getSuitSymbol,
 } from "../../../gameFunctions/getSuitSymbol";
-import { TCardValues } from "../../../lib/definitions";
+import { TCard, TCardValues } from "../../../lib/definitions";
 import styles from "./cards.module.css";
 import { useState } from "react";
 
@@ -25,19 +25,25 @@ const NUMBER_VISUAL: TCardValues = {
 
 interface CardProps {
   index: number;
-  value: number;
-  suit: string;
+  card: TCard;
+  // value: number;
+  // suit: string;
   cardStyle: string;
-  setCardActive(index: number): void;
+  cardsActive: TCard[];
+  setCardActive(index: number, card: TCard): void;
+  // playCard(activeCards: number[]): void;
 }
 
 export default function Card({
   index,
-  value,
-  suit,
+  card,
+  // value,
+  // suit,
   cardStyle,
+  cardsActive,
   setCardActive,
-}: CardProps) {
+}: // playCard,
+CardProps) {
   function NumberSuit({
     value,
     suit,
@@ -64,26 +70,27 @@ export default function Card({
   function Suit({ suit }: { suit: string }) {
     return <div className={styles.middleSuit}>{getSuitSymbol(suit)}</div>;
   }
-  const [isActive, setIsActive] = useState(false);
+
+  const isActive = cardsActive.includes(card);
 
   return (
     <div
       className={clsx(
         styles.card,
-        getSuitColour(suit),
+        getSuitColour(card.suit),
         cardStyle,
         "player-card",
         isActive && "active"
       )}
       onClick={() => {
-        setIsActive((prevState) => !prevState);
-        setCardActive(index);
+        // setIsActive((prevState) => !prevState);
+        setCardActive(index, card);
+        // playCard(index);
       }}
-      onDoubleClick={() => console.log("doubleClicked")}
     >
-      <NumberSuit value={value} suit={suit} />
-      <Suit suit={suit} />
-      <NumberSuit value={value} suit={suit} bottom={true} />
+      <NumberSuit value={card.value} suit={card.suit} />
+      <Suit suit={card.suit} />
+      <NumberSuit value={card.value} suit={card.suit} bottom={true} />
     </div>
   );
 }
