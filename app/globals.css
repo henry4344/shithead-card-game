@@ -220,7 +220,7 @@ a:hover {
   /* opacity: 0.5; */
   padding-bottom: 8px;
 
-  transform: perspective(120px) rotateX(15deg);
+  transform: perspective(100px) rotateX(15deg);
 }
 
 .opponent-table-card {
@@ -230,7 +230,9 @@ a:hover {
   /* opacity: 0.5; */
   /* margin-bottom: 15px; */
 
-  transform: perspective(100px) rotateX(15deg);
+  transform-origin: center center;
+
+  transform: perspective(90px) rotateX(15deg) rotate(180deg);
 
   font-size: smaller;
 }
@@ -285,6 +287,10 @@ a:hover {
 /* .player-card:hover {
   border: 2px #d1df31 solid;
 } */
+
+.opponent-card {
+  transform: rotate(180);
+}
 
 .opponent-hand {
   height: 100%;

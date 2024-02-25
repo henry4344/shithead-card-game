@@ -1,4 +1,4 @@
-const { getSuitSymbol } = require("../app/gameFunctions/getSuitSymbol");
+import { getSuitSymbol } from "@/app/gameFunctions/getSuitSymbol";
 
 describe("check suit symbol", () => {
   test("heart returns ♥️", () => {

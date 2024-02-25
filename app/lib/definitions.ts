@@ -33,3 +33,8 @@ export interface TPlayer {
   tableUp: TCard[];
   tableDown: TCard[];
 }
+
+export interface TMove {
+  success: boolean;
+  splitDeck?: boolean;
+}

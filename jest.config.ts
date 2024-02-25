@@ -4,6 +4,12 @@
  */
 
 import type { Config } from "jest";
+import nextJest from "next/jest.js";
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: "./",
+});
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -16,7 +22,7 @@ const config: Config = {
   // cacheDirectory: "C:\\Users\\HenryDormon\\AppData\\Local\\Temp\\jest",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  // clearMocks: false,
+  clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
@@ -90,7 +96,9 @@ const config: Config = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1",
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -103,7 +111,6 @@ const config: Config = {
 
   // A preset that is used as a base for Jest's configuration
   // preset: undefined,
-  preset: "ts-jest/presets/js-with-babel",
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -197,4 +204,4 @@ const config: Config = {
   // watchman: true,
 };
 
-export default config;
+export default createJestConfig(config);

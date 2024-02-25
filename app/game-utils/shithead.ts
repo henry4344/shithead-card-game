@@ -6,12 +6,14 @@ export default class Shithead {
   players: TPlayer[] = [];
   currentPlayerIndex: number;
   gamePile: TCard[] = [];
+  burnPile: TCard[] = [];
 
   constructor() {
     this.deck = this.initializeDeck();
     this.players = [];
     this.currentPlayerIndex = 0;
     this.gamePile = [];
+    this.burnPile = [];
   }
 
   initializeDeck(): TCard[] {
@@ -74,17 +76,6 @@ export default class Shithead {
     }
   }
 
-  checkPlayerMove(cardIndex: number) {
-    const playCard =
-      this.players[this.currentPlayerIndex].hand[cardIndex].value;
-    const gameCard = this.gamePile[this.gamePile.length - 1].value;
-
-    const isLegal = checkMove(playCard, gameCard);
-
-    if (this.currentPlayerIndex == 0) this.currentPlayerIndex = 1;
-    if (this.currentPlayerIndex == 1) this.currentPlayerIndex = 0;
-  }
-
   pickupCard() {
     if (this.deck.length == 0) return;
 
@@ -103,28 +94,40 @@ export default class Shithead {
     return this.players[this.currentPlayerIndex].hand;
   }
 
-  playCard(cardsActive: TCard[]) {
-    console.log(cardsActive);
+  playCard(cardsActive: TCard[]): boolean {
+    // need to check here if card is valid
+    const { success, splitDeck } = checkMove(cardsActive[0], this.gamePile);
+    console.log(success);
+    // if (splitDeck) return true;
+
+    if (!success) return false;
+
     const playCards = [];
-    for (const card in cardsActive) {
-      console.log(cardsActive[card]);
-      playCards.push(cardsActive[card]);
+    // does play card action
+    for (const card of cardsActive) {
+      // console.log(cardsActive[card]);
+      playCards.push(card);
     }
-    console.log(playCards);
+    // console.log(playCards);
 
     const updatedPlayers = [...this.players];
     const updatedHand = updatedPlayers[this.currentPlayerIndex].hand.filter(
       (card) => !cardsActive.includes(card)
     );
     updatedPlayers[this.currentPlayerIndex].hand = updatedHand;
-    console.log(updatedPlayers[this.currentPlayerIndex].hand);
+    // console.log(updatedPlayers[this.currentPlayerIndex].hand);
 
     this.players = updatedPlayers;
     this.gamePile.push(...playCards);
 
-    for (const card in cardsActive) {
-      this.pickupCard();
+    if (updatedHand.length < 3) {
+      // for (const card in cardsActive) {
+      for (let i = updatedHand.length; i < 3; i++) {
+        this.pickupCard();
+      }
     }
-    console.log(this.gamePile);
+
+    // console.log(this.gamePile);
+    return true;
   }
 }

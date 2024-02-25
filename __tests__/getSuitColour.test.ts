@@ -1,4 +1,4 @@
-const { getSuitColour } = require("../app/gameFunctions/getSuitSymbol");
+import { getSuitColour } from "@/app/gameFunctions/getSuitSymbol";
 
 describe("check suit symbol", () => {
   test("heart returns red", () => {

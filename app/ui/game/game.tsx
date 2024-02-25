@@ -40,7 +40,13 @@ export default function Game() {
   const [cardValueSelected, setCardValueSelected] = useState<number>();
 
   const setCardActive = (index: number, card: TCard) => {
-    if (cardsActive.includes(card)) return playCard();
+    if (cardsActive.includes(card)) {
+      const success = playCard();
+
+      console.log(game.gamePile);
+      if (success) return;
+      return setCardsActive([]);
+    }
 
     if (cardValueSelected && card.value == cardValueSelected) {
       setCardsActive((prevState) => [...prevState, card]);
@@ -57,8 +63,6 @@ export default function Game() {
     game.addPlayer("Player1");
     game.addPlayer("AI");
     game.dealCards();
-
-    console.log(game.players);
 
     setGame(game);
 
@@ -80,13 +84,14 @@ export default function Game() {
     setGame(newGame);
   };
 
-  const playCard = () => {
-    game.playCard(cardsActive);
+  const playCard = (): boolean => {
+    const success = game.playCard(cardsActive);
 
     // Create a deep clone of the game state
     const newGame = cloneDeep(game);
     // Update the state with the new instance
     setGame(newGame);
+    return success;
   };
 
   return (

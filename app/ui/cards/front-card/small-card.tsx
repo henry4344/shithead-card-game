@@ -54,7 +54,7 @@ export default function SmallCard({
         styles.card,
         getSuitColour(suit),
         cardStyle,
-        playerCard && "player-card"
+        playerCard ? "player-card" : "opponent-card"
       )}
     >
       <Number value={value} cardStyle={cardStyle} />
